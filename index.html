@@ -1,60 +1,412 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>我的数学博客</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数学教学博客 - 吴老师</title>
     <script>
-    MathJax = {
-        tex: {
-            macros: {
-                EXP: '{\\mathrm{e}}',
-                RR: '{\\mathbb{R}}',
-                CC: '\\mathbb{C}',
-                vect: ['{\\mathbf{#1}}', 1]
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                macros: {
+                    EXP: '{\\mathrm{e}}',
+                    RR: '{\\mathbb{R}}',
+                    CC: '{\\mathbb{C}}',
+                    QQ: '{\\mathbb{Q}}',
+                    ZZ: '{\\mathbb{Z}}',
+                    NN: '{\\mathbb{N}}',
+                    VECT: ['{\\mathbf{#1}}', 1],
+                    DIF: '{\\mathrm{d}}',
+                    ddx: '\\frac{\\mathrm{d}}{\\mathrm{d}x}',
+                    pdx: ['\\frac{\\partial #1}{\\partial #2}', 2],
+                    integral: '\\int',
+                    SUM: '\\sum',
+                    lim: '\\lim'
+                }
+            },
+            chtml: {
+                displayAlign: 'center'
+            }
+        };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 头部样式 */
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .teacher-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2em;
+            font-weight: bold;
+        }
+        
+        .teacher-text h1 {
+            color: #2c3e50;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+        
+        .teacher-text .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+        
+        /* 导航菜单 */
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* 主要内容区 */
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+        
+        .content-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            color: #2c3e50;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title::before {
+            content: "📚";
+            font-size: 1.2em;
+        }
+        
+        /* 课程网格 */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .course-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        .course-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        
+        .course-card p {
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+        
+        /* 侧边栏 */
+        .sidebar {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .quick-links {
+            list-style: none;
+        }
+        
+        .quick-links li {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-links li:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .quick-links a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        /* 数学名言 */
+        .math-quote {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-style: italic;
+        }
+        
+        /* 公告栏 */
+        .announcement {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .announcement h4 {
+            color: #856404;
+            margin-bottom: 8px;
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 50px;
+            padding: 20px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .teacher-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .nav-menu {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-btn {
+                width: 200px;
+                text-align: center;
             }
         }
-    };
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <style>
-        body { font-family: Arial; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; }
-        .post { border-bottom: 1px solid #eee; padding: 20px 0; }
-        h1 { color: #2c3e50; }
-        a { color: #3498db; text-decoration: none; }
-        a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
-    <h1>📚 我的数学博客</h1>
-    <p>这里是我分享数学知识的地方，完全支持自定义 LaTeX 命令！</p>
-    
-    <div class="post">
-        <h2>欧拉公式</h2>
-        <p>数学中最美丽的公式：</p>
-        <p>$$\EXP^{i\pi} + 1 = 0$$</p>
-        <p>这个公式在复数域 $\CC$ 中成立，连接了五个最重要的数学常数。</p>
-    </div>
+    <div class="container">
+        <!-- 头部 -->
+        <header class="header">
+            <div class="teacher-info">
+                <div class="avatar">张</div>
+                <div class="teacher-text">
+                    <h1>数学教学博客</h1>
+                    <p class="subtitle">吴老师 · 大学数学教师</p>
+                    <p>分享数学知识，启迪智慧思维</p>
+                </div>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="#teaching" class="nav-btn">教学课件</a>
+                <a href="#exercises" class="nav-btn">课后习题</a>
+                <a href="#exams" class="nav-btn">考研真题</a>
+                <a href="message-board.html" class="nav-btn">留言板</a>
+                <a href="about.html" class="nav-btn">关于我</a>
+            </div>
+        </header>
 
-    <div class="post">
-    <h2>最新文章</h2>
-    <p><a href="euler-formula.html">📖 欧拉公式 - 数学中最美的等式</a></p>
-    </div>
-    
-    <div class="post">
-        <h2>向量运算</h2>
-        <p>向量 $\vect{v} = (v_1, v_2, v_3) \in \RR^3$，其长度公式为：</p>
-        <p>$$\|\vect{v}\| = \sqrt{v_1^2 + v_2^2 + v_3^2}$$</p>
-        <p>这是三维空间中的基本概念。</p>
-    </div>
+        <div class="main-content">
+            <!-- 左侧主内容 -->
+            <div class="left-column">
+                <!-- 教学课件区 -->
+                <section id="teaching" class="content-section">
+                    <h2 class="section-title">教学课件</h2>
+                    <p>本学期课程资料下载</p>
+                    
+                    <div class="course-grid">
+                        <a href="calculus.html" class="course-card">
+                            <h3>微积分</h3>
+                            <p>极限、导数、积分等基础概念</p>
+                            <small>更新时间：2024-01-15</small>
+                        </a>
+                        
+                        <a href="linear-algebra.html" class="course-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <h3>线性代数</h3>
+                            <p>矩阵、向量空间、特征值</p>
+                            <small>更新时间：2024-01-10</small>
+                        </a>
+                        
+                        <a href="probability.html" class="course-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <h3>概率统计</h3>
+                            <p>随机变量、分布、假设检验</p>
+                            <small>更新时间：2024-01-08</small>
+                        </a>
+                    </div>
+                </section>
 
-    <div class="post">
-        <h2>如何使用自定义命令</h2>
-        <p>我已经定义了以下命令：</p>
-        <ul>
-            <li>$\EXP$ 表示自然常数 e</li>
-            <li>$\RR$ 表示实数集</li>
-            <li>$\CC$ 表示复数集</li>
-            <li>$\vect{v}$ 表示向量 v</li>
-        </ul>
+                <!-- 课后习题区 -->
+                <section id="exercises" class="content-section">
+                    <h2 class="section-title">课后习题及解答</h2>
+                    <p>精选习题与详细解答</p>
+                    
+                    <div class="course-grid">
+                        <a href="exercises-calculus.html" class="course-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <h3>微积分习题</h3>
+                            <p>第1-4章习题解答</p>
+                            <small>共25道题目</small>
+                        </a>
+                        
+                        <a href="exercises-linear.html" class="course-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                            <h3>线性代数习题</h3>
+                            <p>矩阵运算与线性空间</p>
+                            <small>共18道题目</small>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- 考研真题区 -->
+                <section id="exams" class="content-section">
+                    <h2 class="section-title">考研数学真题</h2>
+                    <p>历年考研数学真题及解析</p>
+                    
+                    <div class="course-grid">
+                        <a href="exam-2023.html" class="course-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                            <h3>2023年真题</h3>
+                            <p>数学一、二、三全套</p>
+                            <small>含详细解析</small>
+                        </a>
+                        
+                        <a href="exam-2022.html" class="course-card" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333;">
+                            <h3>2022年真题</h3>
+                            <p>经典题目解析</p>
+                            <small>重点难点突破</small>
+                        </a>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 右侧边栏 -->
+            <div class="sidebar">
+                <!-- 公告栏 -->
+                <div class="announcement">
+                    <h4>📢 最新公告</h4>
+                    <p>微积分期中考试复习资料已更新</p>
+                    <small>2025年11月1日</small>
+                </div>
+                
+                <div class="announcement">
+                    <h4>🎯 近期安排</h4>
+                    <p>线性代数习题课：1月25日 14:00</p>
+                    <small>地点：Z-4-619</small>
+                </div>
+
+                <!-- 快速链接 -->
+                <h3 class="section-title">快速链接</h3>
+                <ul class="quick-links">
+                    <li><a href="office-hours.html">📅 答疑时间表</a></li>
+                    <li><a href="resources.html">📖 学习资源</a></li>
+                    <li><a href="contact.html">📞 联系方式</a></li>
+                    <li><a href="research.html">🔬 科研方向</a></li>
+                </ul>
+
+                <!-- 数学名言 -->
+                <div class="math-quote">
+                    <p>"数学，科学的皇后；算术，数学的皇后。"</p>
+                    <p>—— 高斯</p>
+                </div>
+
+                <!-- 今日公式 -->
+                <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                    <h4>📐 今日公式</h4>
+                    <p>欧拉公式：</p>
+                    <p>$$\EXP^{i\pi} + 1 = 0$$</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>© 2024 吴老师数学教学博客 · 学数学，用数学，爱数学</p>
+            <p>联系方式：learnweierstrass@gmail.com</p>
+        </footer>
     </div>
 </body>
 </html>
