@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>我的第一篇 Markdown 数学文章 - 我的数学博客</title>
+    <script>
+    MathJax = {
+        tex: {
+            macros: {
+                EXP: '{\\mathrm{e}}',
+                RR: '{\\mathbb{R}}',
+                CC: '\\mathbb{C}',
+                vect: ['{\\mathbf{#1}}', 1],
+                ddx: '\\frac{\\mathrm{d}}{\\mathrm{d}x}',
+                integral: '\\int'
+            }
+        }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+        .post { border-bottom: 1px solid #eee; padding: 20px 0; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #34495e; margin-top: 30px; }
+        h3 { color: #16a085; }
+        p { margin: 15px 0; }
+        ul { margin: 15px 0; padding-left: 30px; }
+        li { margin: 8px 0; }
+        .math { margin: 25px 0; text-align: center; }
+        a { color: #3498db; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        .back-link { background: #f8f9fa; padding: 10px 15px; border-radius: 5px; display: inline-block; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="back-link">
+        <a href="index.html">← 返回首页</a>
+    </div>
+    
+    <h1>我的第一篇 Markdown 数学文章</h1>
+
+    <div class="post">
+        <h2>欧拉公式</h2>
+
+        <p>数学中最美的公式：</p>
+
+        <div class="math">
+            $$\EXP^{i\pi} + 1 = 0$$
+        </div>
+
+        <p>这个公式连接了：</p>
+        <ul>
+            <li>自然常数 $\EXP$</li>
+            <li>虚数单位 $i$</li>
+            <li>圆周率 $\pi$</li>
+            <li>数字 $1$ 和 $0$</li>
+        </ul>
+
+        <p><strong>真是太神奇了！</strong></p>
+    </div>
+
+</body>
+</html>
