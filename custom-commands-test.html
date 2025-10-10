@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>欧拉公式 - 我的数学博客</title>
+    
+    <!-- 先加载 MathJax -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- 然后配置自定义命令 -->
+    <script>
+    // 等待页面加载完成后配置 MathJax
+    window.addEventListener('load', function() {
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                macros: {
+                    EXP: '{\\mathrm{e}}',
+                    RR: '{\\mathbb{R}}',
+                    CC: '{\\mathbb{C}}',
+                    VECT: ['{\\mathbf{#1}}', 1],
+                    DIF: '{\\mathrm{d}}'
+                }
+            },
+            startup: {
+                pageReady: function() {
+                    return MathJax.startup.defaultPageReady().then(function() {
+                        console.log('MathJax 加载完成，自定义命令已配置！');
+                    });
+                }
+            }
+        };
+        
+        // 重新处理数学公式
+        if (MathJax.typesetPromise) {
+            MathJax.typesetPromise();
+        }
+    });
+    </script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .math {
+            margin: 25px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            text-align: center;
+        }
+        h1 { color: #2c3e50; }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 8px 15px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .debug {
+            margin-top: 30px;
+            padding: 15px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← 返回首页</a>
+    
+    <h1>欧拉公式测试（自定义命令版本）</h1>
+    
+    <div class="math">
+        <p>使用自定义命令 $\EXP$：</p>
+        $$\EXP^{i\pi} + 1 = 0$$
+    </div>
+    
+    <div class="math">
+        <p>实数集测试：$x \in \RR$</p>
+    </div>
+    
+    <div class="math">
+        <p>复数集测试：$z \in \CC$</p>
+    </div>
+    
+    <div class="math">
+        <p>向量测试：$\VECT{v} = (v_1, v_2, v_3)$</p>
+    </div>
+    
+    <div class="math">
+        <p>微分测试：$\DIF x$</p>
+    </div>
+
+    <div class="debug">
+        <strong>调试信息：</strong><br>
+        - 如果看到红色错误信息，说明配置有问题<br>
+        - 如果公式显示为代码（如 $\EXP$），说明自定义命令未生效<br>
+        - 如果公式正常显示，恭喜成功！
+    </div>
+
+</body>
+</html>
