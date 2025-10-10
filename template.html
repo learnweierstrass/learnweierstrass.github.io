@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>文章标题 - 我的数学博客</title>
+    <script>
+    MathJax = {
+        tex: {
+            macros: {
+                EXP: '{\\mathrm{e}}',
+                RR: '{\\mathbb{R}}',
+                CC: '\\mathbb{C}',
+                vect: ['{\\mathbf{#1}}', 1],
+                ddx: '\\frac{\\mathrm{d}}{\\mathrm{d}x}',
+                integral: '\\int'
+            }
+        }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+        .math { margin: 20px 0; }
+        h1, h2, h3 { color: #2c3e50; }
+        a { color: #3498db; }
+    </style>
+</head>
+<body>
+    <h1><a href="index.html">← 返回首页</a></h1>
+    
+    <!-- 从这里开始写你的文章内容 -->
+    
+    <h2>章节标题</h2>
+    <p>这里是段落文字。</p>
+    
+    <div class="math">
+        行内公式：$\EXP^{x}$
+    </div>
+    
+    <div class="math">
+        独立公式：
+        $$\int_{-\infty}^{\infty} \EXP^{-x^2} dx = \sqrt{\pi}$$
+    </div>
+    
+    <p>更多内容...</p>
+    
+</body>
+</html>
