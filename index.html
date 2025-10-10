@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>我的数学博客</title>
+    <script>
+    MathJax = {
+        tex: {
+            macros: {
+                EXP: '{\\mathrm{e}}',
+                RR: '{\\mathbb{R}}',
+                CC: '\\mathbb{C}',
+                vect: ['{\\mathbf{#1}}', 1]
+            }
+        }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+        .post { border-bottom: 1px solid #eee; padding: 20px 0; }
+        h1 { color: #2c3e50; }
+        a { color: #3498db; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>📚 我的数学博客</h1>
+    <p>这里是我分享数学知识的地方，完全支持自定义 LaTeX 命令！</p>
+    
+    <div class="post">
+        <h2>欧拉公式</h2>
+        <p>数学中最美丽的公式：</p>
+        <p>$$\EXP^{i\pi} + 1 = 0$$</p>
+        <p>这个公式在复数域 $\CC$ 中成立，连接了五个最重要的数学常数。</p>
+    </div>
+    
+    <div class="post">
+        <h2>向量运算</h2>
+        <p>向量 $\vect{v} = (v_1, v_2, v_3) \in \RR^3$，其长度公式为：</p>
+        <p>$$\|\vect{v}\| = \sqrt{v_1^2 + v_2^2 + v_3^2}$$</p>
+        <p>这是三维空间中的基本概念。</p>
+    </div>
+
+    <div class="post">
+        <h2>如何使用自定义命令</h2>
+        <p>我已经定义了以下命令：</p>
+        <ul>
+            <li>$\EXP$ 表示自然常数 e</li>
+            <li>$\RR$ 表示实数集</li>
+            <li>$\CC$ 表示复数集</li>
+            <li>$\vect{v}$ 表示向量 v</li>
+        </ul>
+    </div>
+</body>
+</html>
