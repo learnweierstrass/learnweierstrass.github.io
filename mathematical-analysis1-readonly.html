@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数学分析1 - 在线阅读</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f6fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .course-info {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+        
+        .nav-btn {
+            padding: 8px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin: 5px;
+        }
+        
+        .nav-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .pdf-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .pdf-viewer {
+            width: 100%;
+            height: 800px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            pointer-events: none; /* 禁用交互 */
+        }
+        
+        .protection-notice {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            color: #856404;
+        }
+        
+        .page-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .page-btn {
+            padding: 8px 15px;
+            background: #e9ecef;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #7f8c8d;
+            margin-top: 30px;
+            padding: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .pdf-viewer {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部信息 -->
+        <header class="header">
+            <h1>数学分析1 - 在线阅读版</h1>
+            <div class="course-info">
+                <p>结合训练，实数论证操作，导数与积分等基础概念</p>
+                <p>更新时间：2025-10-10</p>
+            </div>
+            <div>
+                <a href="index.html" class="nav-btn">返回首页</a>
+            </div>
+        </header>
+
+        <!-- 保护提示 -->
+        <div class="protection-notice">
+            <strong>🔒 保护说明：</strong> 本页面为在线阅读版本，不支持下载。如需完整课件，请联系授课教师。
+        </div>
+
+        <!-- PDF阅读器 -->
+        <div class="pdf-container">
+            <h2>📖 数学分析1课件（只读模式）</h2>
+            
+            <!-- 方法1：禁用右键和选择的PDF查看器 -->
+            <iframe 
+                class="pdf-viewer"
+                src="pdf/mathematical-analysis1.pdf#toolbar=0&navpanes=0&scrollbar=0"
+                title="数学分析1课件"
+                oncontextmenu="return false"
+                onselectstart="return false"
+                ondragstart="return false"
+            >
+                <p>您的浏览器不支持PDF显示，请联系教师获取课件。</p>
+            </iframe>
+            
+            <div class="page-navigation">
+                <button class="page-btn" onclick="zoomOut()">🔍-</button>
+                <button class="page-btn" onclick="zoomIn()">🔍+</button>
+                <button class="page-btn" onclick="fitWidth()">适合宽度</button>
+            </div>
+            
+            <p><small>提示：此页面已禁用下载功能，仅供在线学习使用</small></p>
+        </div>
+
+        <!-- 联系信息 -->
+        <div class="pdf-container">
+            <h3>📞 获取完整课件</h3>
+            <p>如需下载完整课件，请联系：</p>
+            <p><strong>张老师</strong></p>
+            <p>邮箱：zhang@university.edu.cn</p>
+            <p>办公室：数学楼301室</p>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>© 2025 数学教学博客 · 在线阅读版本</p>
+            <p>课件版权归教师所有，仅供教学使用</p>
+        </footer>
+    </div>
+
+    <script>
+        // 禁用右键菜单
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // 禁用文本选择
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // 禁用拖拽
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // 缩放功能
+        let scale = 1;
+        const pdfViewer = document.querySelector('.pdf-viewer');
+        
+        function zoomIn() {
+            scale += 0.1;
+            updateScale();
+        }
+        
+        function zoomOut() {
+            scale = Math.max(0.5, scale - 0.1);
+            updateScale();
+        }
+        
+        function fitWidth() {
+            scale = 1;
+            updateScale();
+        }
+        
+        function updateScale() {
+            // 由于iframe限制，实际缩放效果有限
+            alert('当前缩放级别：' + scale.toFixed(1));
+        }
+        
+        // 防止键盘快捷键
+        document.addEventListener('keydown', function(e) {
+            // 禁用Ctrl+S, Ctrl+P等快捷键
+            if (e.ctrlKey && (e.key === 's' || e.key === 'p')) {
+                e.preventDefault();
+                alert('此操作已被禁用');
+            }
+        });
+    </script>
+</body>
+</html>
