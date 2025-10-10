@@ -17,16 +17,8 @@
                     ZZ: '{\\mathbb{Z}}',
                     NN: '{\\mathbb{N}}',
                     VECT: ['{\\mathbf{#1}}', 1],
-                    DIF: '{\\mathrm{d}}',
-                    ddx: '\\frac{\\mathrm{d}}{\\mathrm{d}x}',
-                    pdx: ['\\frac{\\partial #1}{\\partial #2}', 2],
-                    integral: '\\int',
-                    SUM: '\\sum',
-                    lim: '\\lim'
+                    DECT: '{\\mathrm{d}}'
                 }
-            },
-            chtml: {
-                displayAlign: 'center'
             }
         };
     </script>
@@ -63,33 +55,16 @@
         }
         
         .teacher-info {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 30px;
             margin-bottom: 20px;
         }
         
-        .avatar {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2em;
-            font-weight: bold;
-        }
-        
-        .teacher-text h1 {
+        .teacher-info h1 {
             color: #2c3e50;
             font-size: 2.2em;
             margin-bottom: 10px;
         }
         
-        .teacher-text .subtitle {
+        .teacher-info .subtitle {
             color: #7f8c8d;
             font-size: 1.2em;
         }
@@ -98,7 +73,7 @@
         .nav-menu {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
             margin-top: 30px;
         }
@@ -111,12 +86,10 @@
             border-radius: 25px;
             font-weight: bold;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
         
         .nav-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
         }
         
         /* 主要内容区 */
@@ -140,14 +113,6 @@
             margin-bottom: 20px;
             padding-bottom: 10px;
             border-bottom: 3px solid #667eea;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .section-title::before {
-            content: "📚";
-            font-size: 1.2em;
         }
         
         /* 课程网格 */
@@ -159,7 +124,7 @@
         }
         
         .course-card {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 25px;
             border-radius: 12px;
@@ -181,6 +146,12 @@
         .course-card p {
             opacity: 0.9;
             font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+        
+        .course-card small {
+            opacity: 0.7;
+            font-size: 0.8em;
         }
         
         /* 侧边栏 */
@@ -191,42 +162,6 @@
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
         
-        .quick-links {
-            list-style: none;
-        }
-        
-        .quick-links li {
-            margin-bottom: 12px;
-            padding: 12px 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-        
-        .quick-links li:hover {
-            background: #667eea;
-            color: white;
-            transform: translateX(5px);
-        }
-        
-        .quick-links a {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-        
-        /* 数学名言 */
-        .math-quote {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 12px;
-            margin-top: 20px;
-            text-align: center;
-            font-style: italic;
-        }
-        
-        /* 公告栏 */
         .announcement {
             background: #fff3cd;
             border: 1px solid #ffeaa7;
@@ -238,6 +173,40 @@
         .announcement h4 {
             color: #856404;
             margin-bottom: 8px;
+        }
+        
+        .quick-links {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .quick-links li {
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-links li:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .quick-links a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .math-quote {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            font-style: italic;
         }
         
         /* 页脚 */
@@ -252,11 +221,6 @@
         @media (max-width: 768px) {
             .main-content {
                 grid-template-columns: 1fr;
-            }
-            
-            .teacher-info {
-                flex-direction: column;
-                text-align: center;
             }
             
             .nav-menu {
@@ -276,12 +240,9 @@
         <!-- 头部 -->
         <header class="header">
             <div class="teacher-info">
-                <div class="avatar">吴</div>
-                <div class="teacher-text">
-                    <h1>数学教学博客</h1>
-                    <p class="subtitle">吴老师 · 大学数学教师</p>
-                    <p>分享数学知识，启迪智慧思维</p>
-                </div>
+                <h1>数学教学博客</h1>
+                <p class="subtitle">吴老师 · 大学数学教师</p>
+                <p>分享数学知识，启迪智慧思维</p>
             </div>
             
             <div class="nav-menu">
@@ -289,7 +250,6 @@
                 <a href="#exercises" class="nav-btn">课后习题</a>
                 <a href="#exams" class="nav-btn">考研真题</a>
                 <a href="message-board.html" class="nav-btn">留言板</a>
-                <a href="about.html" class="nav-btn">关于我</a>
             </div>
         </header>
 
@@ -299,21 +259,22 @@
                 <!-- 教学课件区 -->
                 <section id="teaching" class="content-section">
                     <h2 class="section-title">教学课件</h2>
-                    <p>本学期课程资料下载</p>
+                    <p>本学期课程资料</p>
                     
+                    <div class="course-grid">
                         <a href="mathematical-analysis1.html" class="course-card">
                             <h3>数学分析1</h3>
-                            <p>集合映射、实数的连续性、导数与积分等基础概念</p>
+                            <p>结合训练，实数论证操作，导数与积分等基础概念</p>
                             <small>更新时间：2025-10-10</small>
                         </a>
                         
-                        <a href="topics in analysis.html" class="course-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <a href="analysis-lecture.html" class="course-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
                             <h3>分析选讲</h3>
                             <p>微分学、积分学、级数、Fourier分析</p>
                             <small>更新时间：2025-10-10</small>
                         </a>
                         
-                        <a href="probability.html" class="course-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <a href="probability.html" class="course-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
                             <h3>概率论与数理统计</h3>
                             <p>随机变量、分布、假设检验</p>
                             <small>更新时间：2025-10-10</small>
@@ -327,16 +288,16 @@
                     <p>精选习题与详细解答</p>
                     
                     <div class="course-grid">
-                        <a href="exercises-calculus.html" class="course-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <a href="exercises-analysis1.html" class="course-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
                             <h3>数学分析1习题</h3>
-                            <p>第1-2章习题解答</p>
+                            <p>第1-4章习题解答</p>
                             <small>共44道题目</small>
                         </a>
                         
-                        <a href="exercises-topics in analysis.html" class="course-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <a href="exercises-lecture.html" class="course-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
                             <h3>分析选讲习题</h3>
                             <p>综合试卷</p>
-                            <small>共25套985名校数学分析真题</small>
+                            <small>共25卷985名校数学分析真题</small>
                         </a>
                     </div>
                 </section>
@@ -347,13 +308,13 @@
                     <p>历年考研数学真题及解析</p>
                     
                     <div class="course-grid">
-                        <a href="exam-2023.html" class="course-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <a href="exam-2025.html" class="course-card" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333;">
                             <h3>2025年真题</h3>
                             <p>数学一、二、三全套</p>
                             <small>含详细解析</small>
                         </a>
                         
-                        <a href="exam-2022.html" class="course-card" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333;">
+                        <a href="exam-analysis-2025.html" class="course-card" style="background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%); color: #333;">
                             <h3>2025年数学分析真题</h3>
                             <p>经典题目解析</p>
                             <small>重点难点突破</small>
@@ -367,7 +328,7 @@
                 <!-- 公告栏 -->
                 <div class="announcement">
                     <h4>📢 最新公告</h4>
-                    <p>微积分期中考试复习资料已更新</p>
+                    <p>数学分析期中考试复习资料已更新</p>
                     <small>2025年10月10日</small>
                 </div>
                 
@@ -404,7 +365,7 @@
         <!-- 页脚 -->
         <footer class="footer">
             <p>© 2025 吴老师数学教学博客 · 学数学，用数学，爱数学</p>
-            <p>联系方式：learnweierstrass@gmail.com</p>
+            <p>联系方式：learnweierstrass@gmai.com</p>
         </footer>
     </div>
 </body>
