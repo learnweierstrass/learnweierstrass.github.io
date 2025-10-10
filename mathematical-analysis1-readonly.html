@@ -91,20 +91,34 @@
             margin: 20px 0;
             overflow: auto;
             background: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
         }
         
         .pdf-page {
             margin: 10px auto;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             background: white;
+            max-width: 100%;
+        }
+        
+        .controls-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
         }
         
         .page-navigation {
             display: flex;
-            justify-content: center;
             align-items: center;
-            gap: 15px;
-            margin: 20px 0;
+            gap: 10px;
             flex-wrap: wrap;
         }
         
@@ -116,6 +130,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 14px;
+            min-width: 80px;
         }
         
         .page-btn:disabled {
@@ -126,13 +141,37 @@
         .page-info {
             font-weight: bold;
             color: #2c3e50;
+            white-space: nowrap;
+        }
+        
+        .page-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .page-input {
+            width: 60px;
+            padding: 6px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .go-btn {
+            padding: 6px 12px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
         }
         
         .zoom-controls {
             display: flex;
-            justify-content: center;
+            align-items: center;
             gap: 10px;
-            margin: 15px 0;
+            flex-wrap: wrap;
         }
         
         .zoom-btn {
@@ -143,10 +182,15 @@
             cursor: pointer;
         }
         
+        .zoom-btn:hover {
+            background: #dde1e6;
+        }
+        
         .loading {
             text-align: center;
             padding: 40px;
             color: #7f8c8d;
+            font-size: 1.1em;
         }
         
         .footer {
@@ -157,6 +201,15 @@
         }
         
         @media (max-width: 768px) {
+            .controls-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .page-navigation, .page-selector, .zoom-controls {
+                justify-content: center;
+            }
+            
             #pdf-viewer {
                 min-height: 500px;
             }
@@ -186,19 +239,30 @@
         <div class="pdf-container">
             <h2>📖 数学分析1课件（只读模式）</h2>
             
-            <!-- 页面导航 -->
-            <div class="page-navigation">
-                <button class="page-btn" id="prev-page" disabled>上一页</button>
-                <span class="page-info">页面: <span id="page-num">1</span> / <span id="page-count">0</span></span>
-                <button class="page-btn" id="next-page" disabled>下一页</button>
-            </div>
-            
-            <!-- 缩放控制 -->
-            <div class="zoom-controls">
-                <button class="zoom-btn" onclick="zoomOut()">🔍-</button>
-                <span>缩放: <span id="scale">100</span>%</span>
-                <button class="zoom-btn" onclick="zoomIn()">🔍+</button>
-                <button class="zoom-btn" onclick="resetZoom()">重置</button>
+            <!-- 控制面板 -->
+            <div class="controls-container">
+                <!-- 页面导航 -->
+                <div class="page-navigation">
+                    <button class="page-btn" id="prev-page" disabled>上一页</button>
+                    <span class="page-info">页面: <span id="page-num">1</span> / <span id="page-count">0</span></span>
+                    <button class="page-btn" id="next-page" disabled>下一页</button>
+                </div>
+                
+                <!-- 页面选择器 -->
+                <div class="page-selector">
+                    <span>跳转到:</span>
+                    <input type="number" id="page-input" class="page-input" min="1" value="1">
+                    <button class="go-btn" id="go-page">前往</button>
+                </div>
+                
+                <!-- 缩放控制 -->
+                <div class="zoom-controls">
+                    <button class="zoom-btn" onclick="zoomOut()">🔍-</button>
+                    <span>缩放: <span id="scale">100</span>%</span>
+                    <button class="zoom-btn" onclick="zoomIn()">🔍+</button>
+                    <button class="zoom-btn" onclick="resetZoom()">重置</button>
+                    <button class="zoom-btn" onclick="fitToWidth()">适合宽度</button>
+                </div>
             </div>
             
             <!-- PDF显示区域 -->
@@ -206,7 +270,7 @@
                 <div class="loading">正在加载PDF文档...</div>
             </div>
             
-            <p><small>提示：此页面已禁用下载功能，仅供在线学习使用</small></p>
+            <p><small>提示：使用页面选择器可以快速跳转到指定页面</small></p>
         </div>
 
         <!-- 联系信息 -->
@@ -234,6 +298,7 @@
         let pageRendering = false;
         let pageNumPending = null;
         let scale = 1.0;
+        let baseScale = 1.0; // 基础缩放比例（适合宽度）
         
         const pdfUrl = 'pdf/mathematical-analysis1.pdf';
         
@@ -243,23 +308,43 @@
         const pageCountElem = document.getElementById('page-count');
         const prevPageBtn = document.getElementById('prev-page');
         const nextPageBtn = document.getElementById('next-page');
+        const pageInput = document.getElementById('page-input');
+        const goPageBtn = document.getElementById('go-page');
         const scaleElem = document.getElementById('scale');
         
         // 加载PDF文档
         pdfjsLib.getDocument(pdfUrl).promise.then(function(pdfDoc_) {
             pdfDoc = pdfDoc_;
             pageCountElem.textContent = pdfDoc.numPages;
+            pageInput.max = pdfDoc.numPages;
             
-            // 启用导航按钮
-            prevPageBtn.disabled = pageNum <= 1;
-            nextPageBtn.disabled = pageNum >= pdfDoc.numPages;
-            
-            // 渲染第一页
-            renderPage(pageNum);
+            // 计算适合宽度的基础缩放比例
+            calculateBaseScale().then(() => {
+                // 设置默认缩放为适合宽度
+                scale = baseScale;
+                updateScale();
+                
+                // 启用导航按钮
+                prevPageBtn.disabled = pageNum <= 1;
+                nextPageBtn.disabled = pageNum >= pdfDoc.numPages;
+                
+                // 渲染第一页
+                renderPage(pageNum);
+            });
         }).catch(function(error) {
             pdfViewer.innerHTML = '<div class="loading">❌ 加载PDF失败，请检查文件是否存在</div>';
             console.error('PDF加载错误:', error);
         });
+        
+        // 计算适合宽度的基础缩放比例
+        function calculateBaseScale() {
+            return pdfDoc.getPage(1).then(function(page) {
+                const viewport = page.getViewport({ scale: 1.0 });
+                const containerWidth = pdfViewer.clientWidth - 40; // 减去边距
+                baseScale = containerWidth / viewport.width;
+                return baseScale;
+            });
+        }
         
         // 渲染页面
         function renderPage(num) {
@@ -292,6 +377,7 @@
                     
                     pageRendering = false;
                     pageNumElem.textContent = num;
+                    pageInput.value = num;
                     
                     // 更新导航按钮状态
                     prevPageBtn.disabled = num <= 1;
@@ -329,6 +415,18 @@
             queueRenderPage(pageNum);
         }
         
+        // 跳转到指定页面
+        function goToPage() {
+            const targetPage = parseInt(pageInput.value);
+            if (targetPage >= 1 && targetPage <= pdfDoc.numPages) {
+                pageNum = targetPage;
+                queueRenderPage(pageNum);
+            } else {
+                alert('请输入有效的页码（1-' + pdfDoc.numPages + '）');
+                pageInput.value = pageNum;
+            }
+        }
+        
         // 缩放功能
         function zoomIn() {
             scale += 0.1;
@@ -337,13 +435,19 @@
         }
         
         function zoomOut() {
-            scale = Math.max(0.5, scale - 0.1);
+            scale = Math.max(0.3, scale - 0.1);
             updateScale();
             renderPage(pageNum);
         }
         
         function resetZoom() {
             scale = 1.0;
+            updateScale();
+            renderPage(pageNum);
+        }
+        
+        function fitToWidth() {
+            scale = baseScale;
             updateScale();
             renderPage(pageNum);
         }
@@ -355,6 +459,13 @@
         // 事件监听
         prevPageBtn.addEventListener('click', onPrevPage);
         nextPageBtn.addEventListener('click', onNextPage);
+        goPageBtn.addEventListener('click', goToPage);
+        
+        pageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                goToPage();
+            }
+        });
         
         // 保护措施
         document.addEventListener('contextmenu', function(e) {
