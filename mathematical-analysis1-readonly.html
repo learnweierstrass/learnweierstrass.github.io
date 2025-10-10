@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>数学分析1 - 在线阅读</title>
+    <!-- 引入PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -70,15 +72,6 @@
             text-align: center;
         }
         
-        .pdf-viewer {
-            width: 100%;
-            height: 800px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            pointer-events: none; /* 禁用交互 */
-        }
-        
         .protection-notice {
             background: #fff3cd;
             border: 1px solid #ffeaa7;
@@ -89,24 +82,71 @@
             color: #856404;
         }
         
+        /* PDF查看器样式 */
+        #pdf-viewer {
+            width: 100%;
+            min-height: 800px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: auto;
+            background: #f8f9fa;
+        }
+        
+        .pdf-page {
+            margin: 10px auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background: white;
+        }
+        
         .page-navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .page-btn {
+            padding: 8px 15px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .page-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+        
+        .page-info {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .zoom-controls {
             display: flex;
             justify-content: center;
             gap: 10px;
             margin: 15px 0;
         }
         
-        .page-btn {
-            padding: 8px 15px;
+        .zoom-btn {
+            padding: 6px 12px;
             background: #e9ecef;
-            border: none;
-            border-radius: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
             cursor: pointer;
         }
         
-        .page-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
         }
         
         .footer {
@@ -117,8 +157,8 @@
         }
         
         @media (max-width: 768px) {
-            .pdf-viewer {
-                height: 500px;
+            #pdf-viewer {
+                min-height: 500px;
             }
         }
     </style>
@@ -129,7 +169,7 @@
         <header class="header">
             <h1>数学分析1 - 在线阅读版</h1>
             <div class="course-info">
-                <p>数学分析1一般讲到本教材的第6或者第7章, 请配套习题认真思考，读懂每一个定义</p>
+                <p>数学分析1一般讲到本教材的第6或者第7章, 请配套习题认真思考，读懂每一个定义。</p>
                 <p>更新时间：2025-10-10</p>
             </div>
             <div>
@@ -139,29 +179,31 @@
 
         <!-- 保护提示 -->
         <div class="protection-notice">
-            <strong>🔒 保护说明：</strong> 本页面为在线阅读版本，不支持下载。如需完整课件，请联系授课教师。
+            <strong>🔒 保护说明：</strong> 本页面为在线阅读版本，不支持下载和打印。如需完整课件，请联系授课教师。
         </div>
 
         <!-- PDF阅读器 -->
         <div class="pdf-container">
             <h2>📖 数学分析1课件（只读模式）</h2>
             
-            <!-- 方法1：禁用右键和选择的PDF查看器 -->
-            <iframe 
-                class="pdf-viewer"
-                src="pdf/mathematical-analysis1.pdf#toolbar=0&navpanes=0&scrollbar=0"
-                title="数学分析1课件"
-                oncontextmenu="return false"
-                onselectstart="return false"
-                ondragstart="return false"
-            >
-                <p>您的浏览器不支持PDF显示，请联系教师获取课件。</p>
-            </iframe>
-            
+            <!-- 页面导航 -->
             <div class="page-navigation">
-                <button class="page-btn" onclick="zoomOut()">🔍-</button>
-                <button class="page-btn" onclick="zoomIn()">🔍+</button>
-                <button class="page-btn" onclick="fitWidth()">适合宽度</button>
+                <button class="page-btn" id="prev-page" disabled>上一页</button>
+                <span class="page-info">页面: <span id="page-num">1</span> / <span id="page-count">0</span></span>
+                <button class="page-btn" id="next-page" disabled>下一页</button>
+            </div>
+            
+            <!-- 缩放控制 -->
+            <div class="zoom-controls">
+                <button class="zoom-btn" onclick="zoomOut()">🔍-</button>
+                <span>缩放: <span id="scale">100</span>%</span>
+                <button class="zoom-btn" onclick="zoomIn()">🔍+</button>
+                <button class="zoom-btn" onclick="resetZoom()">重置</button>
+            </div>
+            
+            <!-- PDF显示区域 -->
+            <div id="pdf-viewer">
+                <div class="loading">正在加载PDF文档...</div>
             </div>
             
             <p><small>提示：此页面已禁用下载功能，仅供在线学习使用</small></p>
@@ -172,8 +214,8 @@
             <h3>📞 获取完整课件</h3>
             <p>如需下载完整课件，请联系：</p>
             <p><strong>吴老师</strong></p>
-            <p>邮箱：learnweierstrass@gmail.com</p>
-            <p>办公室：Z4-619室</p>
+            <p>邮箱：learnweierstrass@163.com</p>
+            <p>办公室：619室</p>
         </div>
 
         <!-- 页脚 -->
@@ -184,54 +226,157 @@
     </div>
 
     <script>
-        // 禁用右键菜单
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-            return false;
+        // PDF.js配置
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+        
+        let pdfDoc = null;
+        let pageNum = 1;
+        let pageRendering = false;
+        let pageNumPending = null;
+        let scale = 1.0;
+        
+        const pdfUrl = 'pdf/mathematical-analysis1.pdf';
+        
+        // 获取DOM元素
+        const pdfViewer = document.getElementById('pdf-viewer');
+        const pageNumElem = document.getElementById('page-num');
+        const pageCountElem = document.getElementById('page-count');
+        const prevPageBtn = document.getElementById('prev-page');
+        const nextPageBtn = document.getElementById('next-page');
+        const scaleElem = document.getElementById('scale');
+        
+        // 加载PDF文档
+        pdfjsLib.getDocument(pdfUrl).promise.then(function(pdfDoc_) {
+            pdfDoc = pdfDoc_;
+            pageCountElem.textContent = pdfDoc.numPages;
+            
+            // 启用导航按钮
+            prevPageBtn.disabled = pageNum <= 1;
+            nextPageBtn.disabled = pageNum >= pdfDoc.numPages;
+            
+            // 渲染第一页
+            renderPage(pageNum);
+        }).catch(function(error) {
+            pdfViewer.innerHTML = '<div class="loading">❌ 加载PDF失败，请检查文件是否存在</div>';
+            console.error('PDF加载错误:', error);
         });
         
-        // 禁用文本选择
-        document.addEventListener('selectstart', function(e) {
-            e.preventDefault();
-            return false;
-        });
+        // 渲染页面
+        function renderPage(num) {
+            pageRendering = true;
+            
+            pdfDoc.getPage(num).then(function(page) {
+                const viewport = page.getViewport({ scale: scale });
+                
+                // 创建canvas
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                
+                // 渲染PDF页面到canvas
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+                
+                const renderTask = page.render(renderContext);
+                
+                renderTask.promise.then(function() {
+                    // 清空查看器并添加新页面
+                    pdfViewer.innerHTML = '';
+                    const pageDiv = document.createElement('div');
+                    pageDiv.className = 'pdf-page';
+                    pageDiv.appendChild(canvas);
+                    pdfViewer.appendChild(pageDiv);
+                    
+                    pageRendering = false;
+                    pageNumElem.textContent = num;
+                    
+                    // 更新导航按钮状态
+                    prevPageBtn.disabled = num <= 1;
+                    nextPageBtn.disabled = num >= pdfDoc.numPages;
+                    
+                    // 如果有等待的页面，渲染它
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            });
+        }
         
-        // 禁用拖拽
-        document.addEventListener('dragstart', function(e) {
-            e.preventDefault();
-            return false;
-        });
+        // 队列渲染页面
+        function queueRenderPage(num) {
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
+            }
+        }
+        
+        // 上一页
+        function onPrevPage() {
+            if (pageNum <= 1) return;
+            pageNum--;
+            queueRenderPage(pageNum);
+        }
+        
+        // 下一页
+        function onNextPage() {
+            if (pageNum >= pdfDoc.numPages) return;
+            pageNum++;
+            queueRenderPage(pageNum);
+        }
         
         // 缩放功能
-        let scale = 1;
-        const pdfViewer = document.querySelector('.pdf-viewer');
-        
         function zoomIn() {
             scale += 0.1;
             updateScale();
+            renderPage(pageNum);
         }
         
         function zoomOut() {
             scale = Math.max(0.5, scale - 0.1);
             updateScale();
+            renderPage(pageNum);
         }
         
-        function fitWidth() {
-            scale = 1;
+        function resetZoom() {
+            scale = 1.0;
             updateScale();
+            renderPage(pageNum);
         }
         
         function updateScale() {
-            // 由于iframe限制，实际缩放效果有限
-            alert('当前缩放级别：' + scale.toFixed(1));
+            scaleElem.textContent = Math.round(scale * 100);
         }
         
-        // 防止键盘快捷键
+        // 事件监听
+        prevPageBtn.addEventListener('click', onPrevPage);
+        nextPageBtn.addEventListener('click', onNextPage);
+        
+        // 保护措施
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+        
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+        });
+        
         document.addEventListener('keydown', function(e) {
-            // 禁用Ctrl+S, Ctrl+P等快捷键
             if (e.ctrlKey && (e.key === 's' || e.key === 'p')) {
                 e.preventDefault();
-                alert('此操作已被禁用');
+            }
+        });
+        
+        // 键盘导航
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                onPrevPage();
+            } else if (e.key === 'ArrowRight') {
+                onNextPage();
             }
         });
     </script>
