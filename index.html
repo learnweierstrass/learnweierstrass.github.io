@@ -154,6 +154,37 @@
             font-size: 0.8em;
         }
         
+        /* PDF查看器样式 */
+        .pdf-container {
+            margin-top: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .pdf-viewer {
+            width: 100%;
+            height: 600px;
+            border: none;
+            pointer-events: auto;
+        }
+        
+        .pdf-notice {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            text-align: center;
+            color: #856404;
+        }
+        
+        .pdf-notice i {
+            color: #ff6b6b;
+            margin-right: 5px;
+        }
+        
         /* 侧边栏 */
         .sidebar {
             background: white;
@@ -231,6 +262,10 @@
             .nav-btn {
                 width: 200px;
                 text-align: center;
+            }
+            
+            .pdf-viewer {
+                height: 400px;
             }
         }
     </style>
@@ -320,11 +355,26 @@
                     <p>历年考研数学真题及解析</p>
                     
                     <div class="course-grid">
-                        <a href="exam-2025.html" class="course-card" style="background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%); color: #333;">
-                            <h3>数学竞赛与考研</h3>
-                            <p>最新数学竞赛的原题与模拟题</p>
-                            <small>含详细解析</small>
-                        </a>
+                        <!-- 修改后的板块：2026硕士研究生数学一试题解析 -->
+                        <div class="pdf-container">
+                            <h3 style="color: #2c3e50; margin-bottom: 15px;">2026硕士研究生数学一试题解析</h3>
+                            <p style="color: #666; margin-bottom: 15px;">完整版试题解析，仅供在线阅读</p>
+                            
+                            <!-- 嵌入PDF -->
+                            <iframe 
+                                class="pdf-viewer" 
+                                src="https://你的用户名.github.io/path/to/2026-math1-solution.pdf" 
+                                title="2026硕士研究生数学一试题解析"
+                                id="math1-pdf-viewer"
+                            >
+                                <p>您的浏览器不支持PDF查看，请使用现代浏览器如Chrome、Edge等打开。</p>
+                            </iframe>
+                            
+                            <div class="pdf-notice">
+                                <p><i>⚠️</i> 本PDF文件仅供在线阅读，禁止下载、复制和打印。</p>
+                                <p><small>如需引用，请联系管理员获取授权。</small></p>
+                            </div>
+                        </div>
                         
                         <a href="exam-analysis-2025.html" class="course-card" style="background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);">
                             <h3>2025年数学分析真题</h3>
@@ -405,6 +455,47 @@
                 document.body.style.opacity = '1';
             }, 100);
         });
+
+        // PDF防下载措施
+        document.addEventListener('DOMContentLoaded', function() {
+            const pdfViewer = document.getElementById('math1-pdf-viewer');
+            
+            if (pdfViewer) {
+                // 阻止右键菜单
+                pdfViewer.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    alert('本PDF仅供在线阅读，禁止下载！');
+                    return false;
+                });
+                
+                // 阻止键盘快捷键
+                document.addEventListener('keydown', function(e) {
+                    if (e.target === pdfViewer || pdfViewer.contains(e.target)) {
+                        // 阻止Ctrl+S, Ctrl+P, Ctrl+C等
+                        if ((e.ctrlKey || e.metaKey) && 
+                            (e.key === 's' || e.key === 'p' || e.key === 'c')) {
+                            e.preventDefault();
+                            alert('本PDF仅供在线阅读，禁止保存、打印或复制！');
+                            return false;
+                        }
+                    }
+                });
+                
+                // 阻止拖拽
+                pdfViewer.addEventListener('dragstart', function(e) {
+                    e.preventDefault();
+                    return false;
+                });
+            }
+        });
+        
+        // 检测开发者工具（可选，增强保护）
+        let devtools = /./;
+        devtools.toString = function() {
+            alert('检测到开发者工具打开，PDF保护已启用！');
+            return '';
+        };
+        console.log('%c', devtools);
     </script>
 </body>
 </html>
