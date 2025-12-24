@@ -5,219 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2026硕士研究生数学一试题解析</title>
     <style>
-        * {
+        body, html {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f6fa;
-            color: #333;
-            line-height: 1.6;
-            overflow: hidden; /* 防止滚动条 */
-        }
-        
-        .container {
-            display: flex;
-            flex-direction: column;
-            height: 100vh; /* 全屏高度 */
-        }
-        
-        .header {
-            background: white;
-            padding: 15px 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            text-align: center;
-            flex-shrink: 0; /* 固定高度 */
-        }
-        
-        .header h1 {
-            color: #2c3e50;
-            font-size: 1.5em;
-            margin-bottom: 5px;
-        }
-        
-        .back-btn {
-            display: inline-block;
-            padding: 6px 15px;
-            background: #3498db;
-            color: white;
-            text-decoration: none;
-            border-radius: 15px;
-            font-size: 0.9em;
-            transition: all 0.3s ease;
-        }
-        
-        .back-btn:hover {
-            background: #2980b9;
-        }
-        
-        .pdf-container {
-            flex: 1; /* 占据剩余空间 */
-            position: relative;
+            height: 100%;
             overflow: hidden;
         }
         
-        /* 关键的PDF查看器样式 - 隐藏所有工具栏 */
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 18px;
+        }
+        
         .pdf-frame {
             width: 100%;
-            height: 100%;
+            height: calc(100vh - 60px); /* 减去头部高度 */
             border: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-        
-        /* 覆盖层 - 阻止右键菜单和下载 */
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1000;
-            background: transparent;
-            pointer-events: none; /* 允许点击，但不显示右键菜单 */
-        }
-        
-        .notice {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(255, 87, 34, 0.9);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-size: 0.9em;
-            z-index: 1001;
-            animation: fadeInOut 10s ease-in-out forwards;
-        }
-        
-        @keyframes fadeInOut {
-            0% { opacity: 0; transform: translateY(20px); }
-            10% { opacity: 1; transform: translateY(0); }
-            90% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(20px); }
-        }
-        
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.2em;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- 头部 -->
-        <header class="header">
-            <h1>2026硕士研究生数学一试题解析</h1>
-            <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">仅供在线阅读 · 禁止下载</p>
-            <a href="index.html" class="back-btn">返回首页</a>
-        </header>
-
-        <!-- PDF容器 -->
-        <div class="pdf-container">
-            <!-- 关键：使用Google Docs查看器并隐藏工具栏 -->
-            <iframe 
-                class="pdf-frame"
-                src="https://docs.google.com/viewer?url=https://learnweierstrass.github.io/pdf/2026研究生入学考试数学一试题.pdf&embedded=true&hl=zh-CN&toolbar=0&navpanes=0&scrollbar=0"
-                title="2026硕士研究生数学一试题解析"
-                id="pdfViewer"
-            >
-                <p>您的浏览器不支持PDF显示，请联系管理员获取帮助。</p>
-            </iframe>
-            
-            <!-- 透明覆盖层 -->
-            <div class="overlay" id="overlay"></div>
-        </div>
-        
-        <!-- 提示信息 -->
-        <div class="notice" id="notice">
-            ⚠️ 本PDF仅供在线阅读，下载功能已禁用
-        </div>
+    <div class="header">
+        <h1>2026硕士研究生数学一试题解析</h1>
+        <p style="margin: 5px 0; font-size: 12px;">仅供在线阅读 · 返回<a href="index.html" style="color: #3498db; margin-left: 10px;">首页</a></p>
     </div>
-
+    
+    <!-- 直接嵌入PDF -->
+    <iframe 
+        class="pdf-frame"
+        src="pdf/2026研究生入学考试数学一试题.pdf#toolbar=0&navpanes=0"
+        title="2026硕士研究生数学一试题解析"
+    >
+        <p>您的浏览器不支持PDF显示。</p>
+    </iframe>
+    
     <script>
-        // 核心：禁用下载功能
-        document.addEventListener('DOMContentLoaded', function() {
-            const pdfViewer = document.getElementById('pdfViewer');
-            const overlay = document.getElementById('overlay');
-            const notice = document.getElementById('notice');
-            
-            // 方法1：禁用右键菜单（最简单有效）
-            document.addEventListener('contextmenu', function(e) {
-                e.preventDefault();
-                return false;
-            });
-            
-            // 方法2：监听iframe内的内容
-            window.addEventListener('blur', function() {
-                // 如果用户点击了PDF内的下载按钮，重新聚焦
-                if (document.activeElement === pdfViewer) {
-                    window.focus();
-                }
-            });
-            
-            // 方法3：检测打印尝试
-            window.addEventListener('beforeprint', function(e) {
-                e.preventDefault();
-                alert('本PDF禁止打印！');
-                return false;
-            });
-            
-            // 方法4：定时检查并隐藏下载按钮（如果可能的话）
-            setInterval(function() {
-                try {
-                    // 尝试移除iframe内的下载按钮
-                    const iframeDoc = pdfViewer.contentDocument || pdfViewer.contentWindow.document;
-                    const downloadBtns = iframeDoc.querySelectorAll('a[download], button');
-                    downloadBtns.forEach(btn => {
-                        if (btn.textContent.includes('下载') || 
-                            btn.textContent.includes('Download') ||
-                            btn.getAttribute('href')?.includes('.pdf')) {
-                            btn.style.display = 'none';
-                        }
-                    });
-                } catch (e) {
-                    // 跨域限制，无法访问iframe内部
-                    console.log('无法访问iframe内容（正常情况）');
-                }
-            }, 1000);
-            
-            // 显示提示信息
-            setTimeout(function() {
-                notice.style.display = 'none';
-            }, 10000);
-            
-            // 如果用户试图离开页面
-            window.addEventListener('beforeunload', function(e) {
-                // 可以在这里添加确认提示
-                // e.returnValue = '确定要离开吗？本PDF仅供在线阅读。';
-            });
+        // 最简单的保护：禁用右键
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
         });
         
-        // 简单的保护：防止F12开发者工具
+        // 禁用键盘快捷键
         document.addEventListener('keydown', function(e) {
-            // 阻止F12
-            if (e.key === 'F12') {
+            if (e.ctrlKey && (e.key === 's' || e.key === 'p')) {
                 e.preventDefault();
-                alert('开发者工具已禁用');
-                return false;
-            }
-            // 阻止Ctrl+S
-            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-                e.preventDefault();
-                alert('本PDF禁止保存！');
-                return false;
-            }
-            // 阻止Ctrl+P
-            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
-                e.preventDefault();
-                alert('本PDF禁止打印！');
-                return false;
             }
         });
     </script>
