@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026硕士研究生数学一试题解析 - 吴老师数学教学博客</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .pdf-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .pdf-notice {
+            background: #ffebee;
+            border: 2px solid #ffcdd2;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #c62828;
+        }
+        
+        .pdf-notice h3 {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .pdf-viewer {
+            width: 100%;
+            height: 700px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .protection-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 30px;
+            padding: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .pdf-viewer {
+                height: 500px;
+            }
+            
+            .header h1 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>2026硕士研究生数学一试题解析</h1>
+            <p>完整试题与详细解答 · 仅供在线阅读</p>
+            <a href="index.html" class="back-btn">返回首页</a>
+        </div>
+
+        <!-- PDF查看器 -->
+        <div class="pdf-container">
+            <div class="pdf-notice">
+                <h3>⚠️ 重要提示：本PDF仅供在线阅读</h3>
+                <p>为保护版权，本PDF文件已启用防下载保护，禁止下载、复制、打印和截图。</p>
+                <p><small>如需引用，请联系管理员获取授权。</small></p>
+            </div>
+            
+            <!-- 嵌入PDF -->
+            <iframe 
+                class="pdf-viewer" 
+                src="pdfs/2026研究生入学考试数学一试题.pdf" 
+                title="2026硕士研究生数学一试题解析"
+                id="math1-pdf-viewer"
+            >
+                <p>您的浏览器不支持PDF查看，请使用现代浏览器如Chrome、Edge等打开。</p>
+            </iframe>
+            
+            <div class="protection-info">
+                <p><strong>防下载保护已启用：</strong> 右键菜单、键盘快捷键、拖拽等功能已被禁用。</p>
+                <p>如果PDF无法正常显示，请确保您的浏览器支持PDF查看，或尝试刷新页面。</p>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>© 2025 吴老师数学教学博客 · 学数学，用数学，爱数学</p>
+            <p>联系方式：learnweierstrass@gmail.com</p>
+        </footer>
+    </div>
+
+    <script>
+        // 防下载措施
+        document.addEventListener('DOMContentLoaded', function() {
+            const pdfViewer = document.getElementById('math1-pdf-viewer');
+            
+            if (pdfViewer) {
+                // 阻止右键菜单
+                pdfViewer.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    alert('本PDF仅供在线阅读，禁止下载！');
+                    return false;
+                });
+                
+                // 阻止键盘快捷键
+                document.addEventListener('keydown', function(e) {
+                    // 如果焦点在PDF查看器上
+                    if (e.target === pdfViewer || pdfViewer.contains(e.target)) {
+                        // 阻止Ctrl+S, Ctrl+P, Ctrl+C, PrintScreen等
+                        if ((e.ctrlKey || e.metaKey) && 
+                            (e.key === 's' || e.key === 'p' || e.key === 'c')) {
+                            e.preventDefault();
+                            alert('本PDF仅供在线阅读，禁止保存、打印或复制！');
+                            return false;
+                        }
+                        
+                        // 阻止PrintScreen键
+                        if (e.key === 'PrintScreen') {
+                            e.preventDefault();
+                            alert('禁止截图！');
+                            return false;
+                        }
+                    }
+                });
+                
+                // 阻止拖拽
+                pdfViewer.addEventListener('dragstart', function(e) {
+                    e.preventDefault();
+                    return false;
+                });
+                
+                // 阻止选择文本
+                pdfViewer.addEventListener('selectstart', function(e) {
+                    e.preventDefault();
+                    return false;
+                });
+                
+                // 检测iframe内的右键菜单
+                window.addEventListener('blur', function() {
+                    setTimeout(function() {
+                        if (document.activeElement === pdfViewer) {
+                            alert('检测到可能试图下载PDF，操作已被阻止！');
+                        }
+                    }, 100);
+                });
+            }
+            
+            // 页面加载时显示提示
+            setTimeout(function() {
+                alert('欢迎查看2026年数学一试题解析！请注意，本PDF仅供在线阅读，已启用防下载保护。');
+            }, 1000);
+        });
+        
+        // 更严格的保护：防止开发者工具
+        setInterval(function() {
+            const before = new Date().getTime();
+            debugger;
+            const after = new Date().getTime();
+            if (after - before > 100) {
+                alert('检测到开发者工具，PDF保护模式已加强！');
+                // 可以添加更多保护措施
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
