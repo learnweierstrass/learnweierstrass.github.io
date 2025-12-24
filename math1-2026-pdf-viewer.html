@@ -3,62 +3,366 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026硕士研究生数学一试题解析</title>
+    <title>2026硕士研究生数学一试题解析 - PDF课件阅读</title>
     <style>
-        body, html {
+        * {
             margin: 0;
             padding: 0;
-            height: 100%;
-            overflow: hidden;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f6fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
         
         .header {
-            background: #2c3e50;
-            color: white;
-            padding: 10px 20px;
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             text-align: center;
-            font-size: 14px;
         }
         
         .header h1 {
-            margin: 0;
-            font-size: 18px;
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .course-info {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+        
+        .nav-btns {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            padding: 8px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .pdf-viewer-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
         }
         
         .pdf-frame {
             width: 100%;
-            height: calc(100vh - 60px); /* 减去头部高度 */
-            border: none;
+            height: 800px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        /* 修改：去掉下载区域，改为警告区域 */
+        .warning-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .warning-icon {
+            color: #856404;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .warning-text {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .file-info {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        
+        /* 保护覆盖层 */
+        .protection-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        
+        @media (max-width: 768px) {
+            .pdf-frame {
+                height: 500px;
+            }
+            
+            .header h1 {
+                font-size: 1.5em;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>2026硕士研究生数学一试题解析</h1>
-        <p style="margin: 5px 0; font-size: 12px;">仅供在线阅读 · 返回<a href="index.html" style="color: #3498db; margin-left: 10px;">首页</a></p>
+    <!-- 保护覆盖层 -->
+    <div class="protection-overlay" id="protectionOverlay"></div>
+    
+    <div class="container">
+        <!-- 头部信息 -->
+        <header class="header">
+            <h1>2026硕士研究生数学一试题解析</h1>
+            <div class="course-info">
+                <p>2026年全国硕士研究生招生考试数学一试题及详细解答</p>
+                <p>更新时间：2025-12-24</p>
+            </div>
+            <div class="nav-btns">
+                <a href="index.html" class="nav-btn">返回首页</a>
+                <a href="#view" class="nav-btn">在线查看</a>
+            </div>
+        </header>
+
+        <!-- PDF阅读器 -->
+        <div class="pdf-viewer-container">
+            <h2>📖 2026年数学一试题解析</h2>
+            <p>以下是在线阅读的PDF内容：</p>
+            
+            <!-- PDF嵌入 - 隐藏工具栏 -->
+            <iframe 
+                class="pdf-frame"
+                src="2026研究生入学考试数学一试题.pdf#toolbar=0&navpanes=0&scrollbar=0"
+                title="2026硕士研究生数学一试题解析"
+                id="pdfViewer"
+            >
+                <p>您的浏览器不支持PDF显示，请使用Chrome、Edge等现代浏览器。</p>
+            </iframe>
+            
+            <p>如果PDF无法显示，请刷新页面或联系管理员</p>
+        </div>
+
+        <!-- 警告区域（替代下载区域） -->
+        <div class="warning-section">
+            <div class="warning-icon">⚠️</div>
+            <div class="warning-text">
+                <h3>重要提示</h3>
+                <p>本PDF仅供在线阅读，<strong>禁止下载、复制、打印和截图</strong></p>
+                <p><small>如需引用或获取授权，请联系管理员</small></p>
+            </div>
+            <div class="file-info">
+                文件：2026研究生入学考试数学一试题.pdf | 仅供在线阅读
+            </div>
+        </div>
     </div>
-    
-    <!-- 直接嵌入PDF -->
-    <iframe 
-        class="pdf-frame"
-        src="pdf/2026研究生入学考试数学一试题.pdf#toolbar=0&navpanes=0"
-        title="2026硕士研究生数学一试题解析"
-    >
-        <p>您的浏览器不支持PDF显示。</p>
-    </iframe>
-    
+
     <script>
-        // 最简单的保护：禁用右键
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
+        // 核心保护功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const pdfViewer = document.getElementById('pdfViewer');
+            const overlay = document.getElementById('protectionOverlay');
+            
+            console.log('防下载保护已激活');
+            
+            // 1. 禁用右键菜单
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                showWarning('右键菜单已禁用');
+                return false;
+            });
+            
+            // 2. 禁用键盘快捷键
+            document.addEventListener('keydown', function(e) {
+                // 阻止 Ctrl+S, Ctrl+P, Ctrl+Shift+S, Ctrl+Shift+P
+                if (e.ctrlKey || e.metaKey) {
+                    if (e.key === 's' || e.key === 'p' || 
+                        (e.shiftKey && (e.key === 'S' || e.key === 'P'))) {
+                        e.preventDefault();
+                        showWarning('保存和打印功能已禁用');
+                        return false;
+                    }
+                }
+                
+                // 阻止 PrintScreen 截图
+                if (e.key === 'PrintScreen') {
+                    e.preventDefault();
+                    showWarning('截图功能已禁用');
+                    return false;
+                }
+                
+                // 阻止 F12 开发者工具
+                if (e.key === 'F12') {
+                    e.preventDefault();
+                    showWarning('开发者工具已禁用');
+                    return false;
+                }
+            });
+            
+            // 3. 禁用文本选择
+            document.addEventListener('selectstart', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 4. 禁用复制
+            document.addEventListener('copy', function(e) {
+                e.preventDefault();
+                showWarning('复制功能已禁用');
+                return false;
+            });
+            
+            // 5. 防止拖拽
+            document.addEventListener('dragstart', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 6. 监控PDF iframe
+            let iframeClickCount = 0;
+            let lastClickTime = 0;
+            
+            // 监听iframe的加载
+            pdfViewer.addEventListener('load', function() {
+                try {
+                    // 尝试隐藏iframe内的工具栏
+                    const iframeDoc = pdfViewer.contentDocument || pdfViewer.contentWindow.document;
+                    
+                    // 定期检查并隐藏可能的下载元素
+                    setInterval(() => {
+                        try {
+                            // 隐藏任何可能的下载按钮
+                            const elements = iframeDoc.querySelectorAll('a, button, [role="button"]');
+                            elements.forEach(el => {
+                                const text = el.textContent || el.innerText || '';
+                                if (text.includes('下载') || 
+                                    text.includes('Download') || 
+                                    text.includes('Save') ||
+                                    text.includes('Print') ||
+                                    text.includes('打印')) {
+                                    el.style.display = 'none';
+                                    el.style.visibility = 'hidden';
+                                }
+                            });
+                        } catch (e) {
+                            // 跨域限制，正常情况
+                        }
+                    }, 1000);
+                } catch (e) {
+                    console.log('无法访问iframe内部（跨域限制）');
+                }
+            });
+            
+            // 7. 检测用户试图离开页面
+            window.addEventListener('beforeunload', function(e) {
+                // 可选：显示离开确认
+                // e.returnValue = '确定要离开吗？本PDF仅供在线阅读。';
+            });
+            
+            // 8. 显示警告消息
+            function showWarning(message) {
+                // 创建警告元素
+                const warning = document.createElement('div');
+                warning.innerHTML = `
+                    <div style="
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        background: #ff5252;
+                        color: white;
+                        padding: 15px 20px;
+                        border-radius: 8px;
+                        z-index: 10000;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                        animation: slideIn 0.3s ease;
+                        max-width: 300px;
+                    ">
+                        ⚠️ ${message}
+                    </div>
+                `;
+                
+                document.body.appendChild(warning);
+                
+                // 3秒后移除
+                setTimeout(() => {
+                    warning.style.animation = 'slideOut 0.3s ease';
+                    setTimeout(() => warning.remove(), 300);
+                }, 3000);
+            }
+            
+            // 添加CSS动画
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // 初始警告
+            setTimeout(() => {
+                showWarning('防下载保护已启用，本PDF仅供在线阅读');
+            }, 1500);
+            
+            // 定时提醒
+            setInterval(() => {
+                showWarning('请勿尝试下载或复制本PDF内容');
+            }, 300000); // 每5分钟提醒一次
         });
         
-        // 禁用键盘快捷键
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && (e.key === 's' || e.key === 'p')) {
-                e.preventDefault();
-            }
-        });
+        // 增强保护：防止开发者工具
+        (function() {
+            const noDevTools = function() {};
+            noDevTools.toString = function() {
+                alert('检测到开发者工具，PDF保护模式已加强！');
+                return '开发者工具已被禁用';
+            };
+            
+            console.log('%c', noDevTools);
+            
+            // 检测窗口大小变化（开发者工具通常会改变窗口大小）
+            let checkTimer = null;
+            window.addEventListener('resize', function() {
+                clearTimeout(checkTimer);
+                checkTimer = setTimeout(function() {
+                    if (window.outerWidth - window.innerWidth > 100 || 
+                        window.outerHeight - window.innerHeight > 100) {
+                        alert('检测到可能打开了开发者工具，PDF保护已加强！');
+                    }
+                }, 100);
+            });
+        })();
     </script>
 </body>
 </html>
