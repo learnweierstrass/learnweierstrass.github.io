@@ -116,7 +116,6 @@
             min-height: 600px;
         }
 
-        /* PDF.js 的 iframe 占满容器 */
         .pdf-viewer-container iframe {
             width: 100%;
             height: 100%;
@@ -232,15 +231,8 @@
     <!-- ========== PDF 展示区 ========== -->
     <div class="pdf-wrapper">
         <div class="pdf-viewer-container">
-            <!-- 
-                使用 PDF.js 官方 CDN 嵌入 PDF。
-                参数说明：
-                - file=pdf/考研数学冲刺题库.pdf  指向您的 PDF 文件
-                - download=0                    禁用 PDF.js 自带的下载按钮
-                - 注意：中文文件名需要进行 URL 编码，这里使用 encodeURIComponent 处理
-            -->
-            <iframe 
-                src="https://mozilla.github.io/pdf.js/web/viewer.html?file=pdf%2F%E8%80%83%E7%A0%94%E6%95%B0%E5%AD%A6%E5%86%B2%E5%88%BA%E9%A2%98%E5%BA%93.pdf&download=0"
+            <!-- iframe 的 src 由 JavaScript 动态设置 -->
+            <iframe id="pdfFrame" 
                 allow=""
                 sandbox="allow-scripts allow-same-origin"
                 title="考研数学冲刺题库 PDF 阅读器"
@@ -267,18 +259,25 @@
     </div>
 
     <script>
-        // ============================================================
-        // 1. 禁用右键菜单（防止“另存为”）
-        // ============================================================
+        // ========== 动态设置 PDF 路径 ==========
+        var iframe = document.getElementById('pdfFrame');
+        // 使用新的英文文件名
+        var pdfPath = 'pdf/kaoyanshuxuechongcitiku.pdf';
+        // 对路径进行 URL 编码，确保特殊字符被正确处理
+        var encodedPath = encodeURIComponent(pdfPath);
+        // 使用 cdnjs 镜像（国内访问更快），并添加 download=0 禁用下载按钮
+        var viewerUrl = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/web/viewer.html?file=' + encodedPath + '&download=0';
+        // 如果上方 CDN 不可用，可换为官方源（注释掉下面一行，取消注释即可）
+        // var viewerUrl = 'https://mozilla.github.io/pdf.js/web/viewer.html?file=' + encodedPath + '&download=0';
+        iframe.src = viewerUrl;
+
+        // ========== 禁用右键菜单（防止“另存为”） ==========
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
             return false;
         });
 
-        // ============================================================
-        // 2. 禁用 Ctrl+S / Cmd+S (保存页面)
-        //    禁用 Ctrl+P / Cmd+P (打印)
-        // ============================================================
+        // ========== 禁用 Ctrl+S / Ctrl+P / Ctrl+U / F12 ==========
         document.addEventListener('keydown', function(e) {
             // Ctrl+S 或 Cmd+S
             if ((e.ctrlKey || e.metaKey) && e.key === 's') {
@@ -306,24 +305,12 @@
             }
         });
 
-        // ============================================================
-        // 3. 禁用拖拽打开文件
-        // ============================================================
-        document.addEventListener('dragover', function(e) {
-            e.preventDefault();
-        });
-        document.addEventListener('drop', function(e) {
-            e.preventDefault();
-        });
+        // ========== 禁用拖拽打开文件 ==========
+        document.addEventListener('dragover', function(e) { e.preventDefault(); });
+        document.addEventListener('drop', function(e) { e.preventDefault(); });
 
-        // ============================================================
-        // 4. 控制台提示
-        // ============================================================
-        console.log('%c📖 考研数学冲刺题库 - 只读模式已启用', 'font-size:16px; font-weight:bold; color:#667eea;');
-        console.log('%c🔒 下载、打印、右键菜单均已禁用。', 'font-size:14px; color:#d39e00;');
-
-        // 简单尝试获取 PDF 总页数（由于跨域限制，仅作演示）
-        // 实际上 PDF.js 内部会显示页码，这里不做复杂交互
+        console.log('📖 考研数学冲刺题库 - 只读模式已启用');
+        console.log('🔒 下载、打印、右键菜单均已禁用。');
     </script>
 </body>
 </html>
