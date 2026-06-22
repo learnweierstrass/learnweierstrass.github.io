@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>考研数学冲刺题库 - PDF课件阅读</title>
+    <title>考研数学冲刺题库 - 在线阅读</title>
     <style>
         * {
             margin: 0;
@@ -83,34 +83,20 @@
             margin-bottom: 15px;
         }
         
-        .download-section {
-            background: #e8f4f8;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
+        /* 保护提示条 - 突出显示 */
+        .protection-banner {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 12px 20px;
+            margin-top: 15px;
+            border-radius: 5px;
             text-align: center;
+            color: #856404;
+            font-weight: 500;
         }
         
-        .download-btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background: #27ae60;
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        
-        .download-btn:hover {
-            background: #219a52;
-            transform: translateY(-2px);
-        }
-        
-        .file-info {
-            color: #666;
-            font-size: 0.9em;
-            margin-top: 10px;
+        .protection-banner strong {
+            color: #d39e00;
         }
         
         @media (max-width: 768px) {
@@ -135,40 +121,83 @@
             </div>
             <div class="nav-btns">
                 <a href="index.html" class="nav-btn">返回首页</a>
-                <a href="#download" class="nav-btn">下载PDF</a>
             </div>
         </header>
 
         <!-- PDF阅读器 -->
         <div class="pdf-viewer-container">
-            <h2>📖 考研数学冲刺题库</h2>
-            <p>以下是在线阅读的PDF课件内容：</p>
+            <h2>📖 考研数学冲刺题库（只读模式）</h2>
+            <p>以下是在线阅读的PDF内容，<strong>禁止下载和打印</strong>：</p>
             
-            <!-- PDF嵌入 - 使用 GitHub Pages 上的在线链接 -->
+            <!-- 使用 PDF.js 在线查看器，并禁用下载和打印按钮 -->
             <iframe 
                 class="pdf-frame"
-                src="https://learnweierstrass.github.io/pdf/kaoyanshuxuechongcitiku.pdf"
+                src="https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Flearnweierstrass.github.io%2Fpdf%2Fkaoyanshuxuechongcitiku.pdf&download=0&print=0"
                 title="考研数学冲刺题库"
             >
-                <p>您的浏览器不支持PDF显示，请<a href="https://learnweierstrass.github.io/pdf/kaoyanshuxuechongcitiku.pdf">点击下载PDF文件</a></p>
+                <p>您的浏览器不支持PDF显示，请使用现代浏览器打开。</p>
             </iframe>
             
-            <p>如果PDF无法显示，请尝试下载后查看</p>
-        </div>
-
-        <!-- 下载区域 -->
-        <div class="download-section" id="download">
-            <h3>📥 下载课件</h3>
-            <p>如果需要保存课件到本地，请点击下方下载按钮：</p>
-            <a href="https://learnweierstrass.github.io/pdf/kaoyanshuxuechongcitiku.pdf" 
-               class="download-btn" 
-               download="考研数学冲刺题库.pdf">
-               下载PDF文件
-            </a>
-            <div class="file-info">
-                文件大小：约3.5MB | 页数：加载中
+            <!-- 保护提示 -->
+            <div class="protection-banner">
+                🔒 <strong>保护说明：</strong>本页面为在线阅读版本，<strong>不支持下载和打印</strong>。如需完整资料，请联系授课教师。
             </div>
         </div>
     </div>
+
+    <script>
+        // ============================================================
+        // 完全禁用右键菜单（防止“另存为”）
+        // ============================================================
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // ============================================================
+        // 禁用 Ctrl+S / Cmd+S (保存页面) 和 Ctrl+P / Cmd+P (打印)
+        // 以及 Ctrl+U (查看源代码) 和 F12 (开发者工具)
+        // ============================================================
+        document.addEventListener('keydown', function(e) {
+            // 保存
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                alert('❌ 此页面为只读模式，不支持下载保存。');
+                return false;
+            }
+            // 打印
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                e.preventDefault();
+                alert('❌ 此页面为只读模式，不支持打印。');
+                return false;
+            }
+            // 查看源代码
+            if ((e.ctrlKey || e.metaKey) && e.key === 'u') {
+                e.preventDefault();
+                alert('❌ 此页面为只读模式，不支持查看源代码。');
+                return false;
+            }
+            // F12 开发者工具
+            if (e.key === 'F12') {
+                e.preventDefault();
+                alert('❌ 开发者工具已禁用。');
+                return false;
+            }
+        });
+
+        // ============================================================
+        // 禁用拖拽打开文件
+        // ============================================================
+        document.addEventListener('dragover', function(e) {
+            e.preventDefault();
+        });
+        document.addEventListener('drop', function(e) {
+            e.preventDefault();
+        });
+
+        // 控制台提示
+        console.log('%c📖 考研数学冲刺题库 - 只读模式已启用', 'font-size:16px; font-weight:bold; color:#3498db;');
+        console.log('%c🔒 下载、打印、右键菜单均已禁用。', 'font-size:14px; color:#d39e00;');
+    </script>
 </body>
 </html>
