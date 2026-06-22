@@ -218,7 +218,7 @@
 </head>
 <body>
     <div class="container">
-        <!-- 头部信息 -->
+        <!-- 头部信息（完全仿照数学分析1） -->
         <header class="header">
             <h1>考研数学冲刺题库 - 在线阅读版</h1>
             <div class="course-info">
@@ -230,7 +230,7 @@
             </div>
         </header>
 
-        <!-- 保护提示 -->
+        <!-- 保护提示（与数学分析1样式相同） -->
         <div class="protection-notice">
             <strong>🔒 保护说明：</strong> 本页面为在线阅读版本，<strong>不支持下载和打印</strong>。如需完整资料，请联系授课教师。
         </div>
@@ -239,23 +239,20 @@
         <div class="pdf-container">
             <h2>📖 考研数学冲刺题库（只读模式）</h2>
             
-            <!-- 控制面板 -->
+            <!-- 控制面板（完全仿照数学分析1） -->
             <div class="controls-container">
-                <!-- 页面导航 -->
                 <div class="page-navigation">
                     <button class="page-btn" id="prev-page" disabled>上一页</button>
                     <span class="page-info">页面: <span id="page-num">1</span> / <span id="page-count">0</span></span>
                     <button class="page-btn" id="next-page" disabled>下一页</button>
                 </div>
                 
-                <!-- 页面选择器 -->
                 <div class="page-selector">
                     <span>跳转到:</span>
                     <input type="number" id="page-input" class="page-input" min="1" value="1">
                     <button class="go-btn" id="go-page">前往</button>
                 </div>
                 
-                <!-- 缩放控制 -->
                 <div class="zoom-controls">
                     <button class="zoom-btn" onclick="zoomOut()">🔍-</button>
                     <span>缩放: <span id="scale">100</span>%</span>
@@ -273,10 +270,10 @@
             <p><small>提示：使用页面选择器可以快速跳转到指定页面</small></p>
         </div>
 
-        <!-- 联系信息 -->
+        <!-- 联系信息（用于获取完整课件，但不提供下载按钮） -->
         <div class="pdf-container">
-            <h3>📞 获取完整资料</h3>
-            <p>如需下载完整课件，请联系：</p>
+            <h3>📞 获取完整课件</h3>
+            <p>如需获取完整资料，请联系：</p>
             <p><strong>吴老师</strong></p>
             <p>邮箱：learnweierstrass@gmail.com</p>
             <p>办公室：619室</p>
@@ -300,7 +297,7 @@
         let scale = 1.0;
         let baseScale = 1.0;
         
-        // 注意：PDF 文件路径为您的在线 PDF 链接
+        // PDF文件路径（注意：使用您的GitHub在线地址）
         const pdfUrl = 'https://learnweierstrass.github.io/pdf/kaoyanshuxuechongcitiku.pdf';
         
         // 获取DOM元素
@@ -332,6 +329,7 @@
             console.error('PDF加载错误:', error);
         });
         
+        // 计算适合宽度的基础缩放比例
         function calculateBaseScale() {
             return pdfDoc.getPage(1).then(function(page) {
                 const viewport = page.getViewport({ scale: 1.0 });
@@ -341,27 +339,39 @@
             });
         }
         
+        // 渲染页面
         function renderPage(num) {
             pageRendering = true;
+            
             pdfDoc.getPage(num).then(function(page) {
                 const viewport = page.getViewport({ scale: scale });
+                
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
                 canvas.height = viewport.height;
                 canvas.width = viewport.width;
-                const renderContext = { canvasContext: ctx, viewport: viewport };
+                
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+                
                 const renderTask = page.render(renderContext);
+                
                 renderTask.promise.then(function() {
                     pdfViewer.innerHTML = '';
                     const pageDiv = document.createElement('div');
                     pageDiv.className = 'pdf-page';
                     pageDiv.appendChild(canvas);
                     pdfViewer.appendChild(pageDiv);
+                    
                     pageRendering = false;
                     pageNumElem.textContent = num;
                     pageInput.value = num;
+                    
                     prevPageBtn.disabled = num <= 1;
                     nextPageBtn.disabled = num >= pdfDoc.numPages;
+                    
                     if (pageNumPending !== null) {
                         renderPage(pageNumPending);
                         pageNumPending = null;
@@ -433,39 +443,46 @@
         prevPageBtn.addEventListener('click', onPrevPage);
         nextPageBtn.addEventListener('click', onNextPage);
         goPageBtn.addEventListener('click', goToPage);
+        
         pageInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') goToPage();
+            if (e.key === 'Enter') {
+                goToPage();
+            }
         });
         
-        // 键盘翻页
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'ArrowLeft') onPrevPage();
-            else if (e.key === 'ArrowRight') onNextPage();
-        });
-        
-        // ========== 完全禁止下载 ==========
-        // 1. 禁用右键菜单
+        // ==================== 禁止下载和打印 ====================
+        // 禁用右键菜单（防止“另存为”等）
         document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // 禁用文本选择（防止复制内容）
+        document.addEventListener('selectstart', function(e) {
             e.preventDefault();
         });
         
-        // 2. 禁用 Ctrl+S / Ctrl+P / Ctrl+U / F12
+        // 禁用键盘快捷键（Ctrl+S、Ctrl+P、Ctrl+U、F12等）
         document.addEventListener('keydown', function(e) {
+            // Ctrl+S 或 Cmd+S
             if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
                 e.preventDefault();
                 alert('❌ 此页面为只读模式，不支持下载保存。');
                 return false;
             }
+            // Ctrl+P 或 Cmd+P
             if ((e.ctrlKey || e.metaKey) && (e.key === 'p' || e.key === 'P')) {
                 e.preventDefault();
                 alert('❌ 此页面为只读模式，不支持打印。');
                 return false;
             }
+            // Ctrl+U 查看源代码
             if ((e.ctrlKey || e.metaKey) && (e.key === 'u' || e.key === 'U')) {
                 e.preventDefault();
                 alert('❌ 此页面为只读模式，不支持查看源代码。');
                 return false;
             }
+            // F12 开发者工具
             if (e.key === 'F12') {
                 e.preventDefault();
                 alert('❌ 开发者工具已禁用。');
@@ -473,12 +490,26 @@
             }
         });
         
-        // 3. 禁用拖拽
-        document.addEventListener('dragover', function(e) { e.preventDefault(); });
-        document.addEventListener('drop', function(e) { e.preventDefault(); });
+        // 禁用拖拽打开文件
+        document.addEventListener('dragover', function(e) {
+            e.preventDefault();
+        });
+        document.addEventListener('drop', function(e) {
+            e.preventDefault();
+        });
         
-        // 4. 禁用选择文本（可选）
-        document.addEventListener('selectstart', function(e) { e.preventDefault(); });
+        // 键盘翻页（左/右方向键）
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                onPrevPage();
+            } else if (e.key === 'ArrowRight') {
+                onNextPage();
+            }
+        });
+        
+        // 控制台提示（非必要，但可提醒）
+        console.log('%c📖 考研数学冲刺题库 - 只读模式已启用', 'font-size:16px; font-weight:bold; color:#3498db;');
+        console.log('%c🔒 下载、打印、右键菜单均已禁用。', 'font-size:14px; color:#d39e00;');
     </script>
 </body>
 </html>
