@@ -83,7 +83,6 @@
             margin-bottom: 15px;
         }
         
-        /* 保护提示条 - 突出显示 */
         .protection-banner {
             background: #fff3cd;
             border-left: 5px solid #ffc107;
@@ -129,16 +128,18 @@
             <h2>📖 考研数学冲刺题库（只读模式）</h2>
             <p>以下是在线阅读的PDF内容，<strong>禁止下载和打印</strong>：</p>
             
-            <!-- 使用 PDF.js 在线查看器，并禁用下载和打印按钮 -->
+            <!-- 
+                使用 PDF.js 官方查看器，通过参数禁用下载和打印功能。
+                注意：参数使用 download=false 和 print=false（而非 0）
+            -->
             <iframe 
                 class="pdf-frame"
-                src="https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Flearnweierstrass.github.io%2Fpdf%2Fkaoyanshuxuechongcitiku.pdf&download=0&print=0"
+                src="https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Flearnweierstrass.github.io%2Fpdf%2Fkaoyanshuxuechongcitiku.pdf&download=false&print=false"
                 title="考研数学冲刺题库"
             >
                 <p>您的浏览器不支持PDF显示，请使用现代浏览器打开。</p>
             </iframe>
             
-            <!-- 保护提示 -->
             <div class="protection-banner">
                 🔒 <strong>保护说明：</strong>本页面为在线阅读版本，<strong>不支持下载和打印</strong>。如需完整资料，请联系授课教师。
             </div>
@@ -146,38 +147,29 @@
     </div>
 
     <script>
-        // ============================================================
-        // 完全禁用右键菜单（防止“另存为”）
-        // ============================================================
+        // 完全禁用右键菜单
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
             return false;
         });
 
-        // ============================================================
-        // 禁用 Ctrl+S / Cmd+S (保存页面) 和 Ctrl+P / Cmd+P (打印)
-        // 以及 Ctrl+U (查看源代码) 和 F12 (开发者工具)
-        // ============================================================
+        // 禁用 Ctrl+S、Ctrl+P、Ctrl+U、F12
         document.addEventListener('keydown', function(e) {
-            // 保存
             if ((e.ctrlKey || e.metaKey) && e.key === 's') {
                 e.preventDefault();
                 alert('❌ 此页面为只读模式，不支持下载保存。');
                 return false;
             }
-            // 打印
             if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
                 e.preventDefault();
                 alert('❌ 此页面为只读模式，不支持打印。');
                 return false;
             }
-            // 查看源代码
             if ((e.ctrlKey || e.metaKey) && e.key === 'u') {
                 e.preventDefault();
                 alert('❌ 此页面为只读模式，不支持查看源代码。');
                 return false;
             }
-            // F12 开发者工具
             if (e.key === 'F12') {
                 e.preventDefault();
                 alert('❌ 开发者工具已禁用。');
@@ -185,9 +177,7 @@
             }
         });
 
-        // ============================================================
-        // 禁用拖拽打开文件
-        // ============================================================
+        // 禁用拖拽
         document.addEventListener('dragover', function(e) {
             e.preventDefault();
         });
@@ -195,7 +185,6 @@
             e.preventDefault();
         });
 
-        // 控制台提示
         console.log('%c📖 考研数学冲刺题库 - 只读模式已启用', 'font-size:16px; font-weight:bold; color:#3498db;');
         console.log('%c🔒 下载、打印、右键菜单均已禁用。', 'font-size:14px; color:#d39e00;');
     </script>
