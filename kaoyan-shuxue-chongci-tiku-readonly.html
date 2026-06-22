@@ -129,12 +129,14 @@
             <p>以下是在线阅读的PDF内容，<strong>禁止下载和打印</strong>：</p>
             
             <!-- 
-                使用 PDF.js 官方查看器，通过参数禁用下载和打印功能。
-                注意：参数使用 download=false 和 print=false（而非 0）
+                使用 PDF.js 官方查看器，通过双重参数确保隐藏下载按钮。
+                #download=0 用于 URL hash，?download=0 用于 query string。
+                同时添加 print=0 隐藏打印按钮。
+                若仍无效，可能是缓存问题，请强制刷新（Ctrl+F5）。
             -->
             <iframe 
                 class="pdf-frame"
-                src="https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Flearnweierstrass.github.io%2Fpdf%2Fkaoyanshuxuechongcitiku.pdf&download=false&print=false"
+                src="https://mozilla.github.io/pdf.js/web/viewer.html?file=https%3A%2F%2Flearnweierstrass.github.io%2Fpdf%2Fkaoyanshuxuechongcitiku.pdf&download=0&print=0#download=0"
                 title="考研数学冲刺题库"
             >
                 <p>您的浏览器不支持PDF显示，请使用现代浏览器打开。</p>
